@@ -1,0 +1,54 @@
+.main-wrapper{
+    height: 100vh;
+}
+
+.logo img{
+    width: 45px;
+    margin-right: 20px;
+}
+.logo span{
+    font-weight: bold;
+    font-size: 30px;
+}
+
+main{
+    background-color: dodgerblue;
+    flex-grow: 1;
+}
+.grid{
+    width: 500px;
+    height: 500px;
+    background-color: green;
+}
+.cell{
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.square100{
+    width: calc(100% / 10);
+    height: calc(100% / 10);
+}
+.square81{
+    width: calc(100% / 9);
+    height: calc(100% / 9);
+}
+.square49{
+    width: calc(100% / 7);
+    height: calc(100% / 7);
+}
+.bomb{
+    background-color: brown;
+    color: white;
+}
+.clicked{
+    background-color: rgb(65, 208, 77, .25);
+    color: white;
+}
+.game-wrapper{
+    position:relative;
+}
