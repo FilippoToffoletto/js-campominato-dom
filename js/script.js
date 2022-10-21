@@ -14,6 +14,7 @@ const levelSelect = document.querySelector('#level');
 const gridLevels = [100, 81, 49];
 const BOMBS_NUMBER = 16;
 let bombs = [];
+let score = 0;
 
 playBtn.addEventListener('click', play);
 
@@ -25,6 +26,7 @@ function play(){
 
     // genero la griglia
     generatePlayGround(cellNumbers);
+    bombs = generateBombs(cellNumbers);
 }
 
 function generatePlayGround(cellNumbers){
@@ -38,11 +40,12 @@ function generatePlayGround(cellNumbers){
     }
     main.append(grid);
 }
+
 function generateCell(cellId, cellNumbers){
     const cell = document.createElement('div');
     cell.className = 'cell';
 
-    cell.classList.add('square'+cellNumbers);
+    cell.classList.add('square'+ cellNumbers);
     cell.cellId = cellId;
     cell.innerHTML = `<span>${cellId}</span>`;
 
@@ -51,22 +54,44 @@ function generateCell(cellId, cellNumbers){
     return cell;
 }
 
+
 function handleClickCell(){
+    this.classList.add('clicked');
 
     if(!bombs.includes(this.cellId)){
 
-        this.classList.add('clicked');
         score++;
         const cells = document.getElementsByName('cell');
 
         if(score === cells.length - BOMBS_NUMBER){
             // fine gioco
-            console.log('vinto');
+            endGame(true);
         }
     }else{
-        console.log('fine');
+        endGame(false);
     }
+}
 
+function endGame(isWin){
+    let msg;
+    const cells = document.getElementsByClassName('cell');
+    if(isWin){
+        msg = `HAI VINTO!`
+    }else{
+        msg = `HAI PERSO!Hai fatto ${score} punti su ${cell.length - BOMBS_NUMBER} possibilità.`
+    }
+    document.querySelector('.endMessage').innerHTML = msg;
+    showBombs();
+}
+
+function showBombs(){
+    const cells = document.getElementsByClassName('cell');
+    for(let i = 0; i < cells.length; i++){
+        const cell = cells[i];
+        if(bombs.includes(cell.cellId)){
+            cell.classList.add('bomb');
+        }
+    }
 }
 
 function generateBombs(cellNumbers){
@@ -80,17 +105,15 @@ function generateBombs(cellNumbers){
             bombsGenerated.push(bomb);
         }
     }
-
+    console.log(bombsGenerated);
     return bombsGenerated;
 }
-function generateRandomNumber(){
-    return Math.floor(Math.random() * (max - min + 1) + min);
+function generateRandomNumber(min, max){
+    return Math.floor(Math.random() * (max - min +1) + min);
 }
 
 
 function reset(){
     main.innerHTML = '';
     let score = 0;
-    document.querySelector('.endMessage').innerHTML = '';
-
 }
