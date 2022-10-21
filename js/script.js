@@ -13,6 +13,7 @@ const levelSelect = document.querySelector('#level');
 
 const gridLevels = [100, 81, 49];
 const BOMBS_NUMBER = 16;
+let bombs = [];
 
 playBtn.addEventListener('click', play);
 
@@ -30,12 +31,12 @@ function generatePlayGround(cellNumbers){
     // creo la griglia
     const grid = document.createElement('div');
     grid.className = 'grid';
-    console.log(grid);
 
     for(let  i = 1; i <= cellNumbers; i++){
         const cell = generateCell(i, cellNumbers);
         grid.append(cell);
     }
+    main.append(grid);
 }
 function generateCell(cellId, cellNumbers){
     const cell = document.createElement('div');
@@ -44,30 +45,37 @@ function generateCell(cellId, cellNumbers){
     cell.classList.add('square'+cellNumbers);
     cell.cellId = cellId;
     cell.innerHTML = `<span>${cellId}</span>`;
+
     cell.addEventListener('click', handleClickCell);
+
     return cell;
 }
 
 function handleClickCell(){
+
     if(!bombs.includes(this.cellId)){
+
         this.classList.add('clicked');
-        score ++;
-        console.log(score);
+        score++;
         const cells = document.getElementsByName('cell');
-        if(!score === cells.length - BOMBS_NUMBER){
+
+        if(score === cells.length - BOMBS_NUMBER){
             // fine gioco
+            console.log('vinto');
         }
     }else{
-        console.log(fine);
+        console.log('fine');
     }
 
 }
 
 function generateBombs(cellNumbers){
+
     const bombsGenerated = [];
 
     while(bombsGenerated.length < BOMBS_NUMBER){
-        const bomb = generateRandomNumber();
+        const bomb = generateRandomNumber(1, cellNumbers);
+
         if(!bombsGenerated.includes(bomb)){
             bombsGenerated.push(bomb);
         }
@@ -82,5 +90,7 @@ function generateRandomNumber(){
 
 function reset(){
     main.innerHTML = '';
+    let score = 0;
+    document.querySelector('.endMessage').innerHTML = '';
 
 }
