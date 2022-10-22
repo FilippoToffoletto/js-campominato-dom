@@ -15,6 +15,7 @@ const gridLevels = [100, 81, 49];
 const BOMBS_NUMBER = 16;
 let bombs = [];
 let score = 0;
+let msg = document.getElementsByClassName('.end_Message');
 
 playBtn.addEventListener('click', play);
 
@@ -73,15 +74,21 @@ function handleClickCell(){
 }
 
 function endGame(isWin){
-    let msg;
+    let msg = document.createElement('div');
+    msg.className = 'end_Message';
     const cells = document.getElementsByClassName('cell');
     if(isWin){
-        msg = `HAI VINTO!`
+        msg = document.innerHTML `hai vinto`;
+        console.log(msg);
     }else{
-        msg = `HAI PERSO!Hai fatto ${score} punti su ${cell.length - BOMBS_NUMBER} possibilità.`
+        msg = `HAI PERSO!Hai fatto ${score} punti su ${cells.length - BOMBS_NUMBER} possibilità.`
+        console.log(msg);
     }
-    document.querySelector('.endMessage').innerHTML = msg;
+    document.getElementsByClassName('.end_Message').innerHTML = msg;
     showBombs();
+    const endLev = document.createElement('div');
+    endLev.className('end-game-level');
+    document.querySelector('.game-wrapper').add('endLev');
 }
 
 function showBombs(){
@@ -116,4 +123,5 @@ function generateRandomNumber(min, max){
 function reset(){
     main.innerHTML = '';
     let score = 0;
+    document.getElementsByClassName('.end_Message').innerHTML = msg;
 }
