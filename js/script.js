@@ -84,11 +84,11 @@ function endGame(isWin){
         msg = `HAI PERSO!Hai fatto ${score} punti su ${cells.length - BOMBS_NUMBER} possibilità.`
         console.log(msg);
     }
-    document.getElementsByClassName('.end_Message').innerHTML = msg;
+    document.getElementsByClassName('end_Message').innerHTML = msg;
     showBombs();
     const endLev = document.createElement('div');
-    endLev.className('end-game-level');
-    document.querySelector('.game-wrapper').add('endLev');
+    endLev.className = 'end-game-level';
+    document.querySelector('.game-wrapper').append(endLev);
 }
 
 function showBombs(){
